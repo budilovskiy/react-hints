@@ -62,18 +62,16 @@ class SimpleSlider extends Component {
             },
             stepBack: false
         });
-        this.timerID = setTimeout(
-            () => {
-                this.setState({
-                    hintsVisibility: {
-                        left: false,
-                        tap: false,
-                        right: false
-                    },
-                    zoomImage: false
-                });
-            }, hintsVisibilityTimeout
-        );
+        this.timerID = setTimeout(() => {
+            this.setState({
+                hintsVisibility: {
+                    left: false,
+                    tap: false,
+                    right: false
+                },
+                zoomImage: false
+            }); 
+        }, hintsVisibilityTimeout);
     }
 
     onTapPressed() {
