@@ -41,6 +41,14 @@ class SimpleSlider extends Component {
         };
         this.timerID = undefined;
     }
+    
+    componentDidMount() {
+        document.addEventListener("keypress", this.onKeyPress, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keypress", this.onKeyPress, false);
+    }
 
     setHintsVisibility(left, tap, right) {
         if (this.timerID) {
@@ -132,14 +140,6 @@ class SimpleSlider extends Component {
             transition: 'all 200ms ease'
         }
     };
-
-    componentDidMount() {
-        document.addEventListener("keypress", this.onKeyPress, false);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener("keypress", this.onKeyPress, false);
-    }
 
     render() {
         let settings = {
