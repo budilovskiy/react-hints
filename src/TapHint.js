@@ -8,6 +8,11 @@ class TapHint extends Component {
         this.state = {
             style: {}
         };
+        this.timeout = undefined;
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
     }
 
     onAction() {
@@ -17,7 +22,7 @@ class TapHint extends Component {
             transform: 'scale(1.1) translateY(-40%)',
             transition: 'all 250ms ease'
         }});
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             this.setState({style: {
                 backgroundColor: 'rgba(0, 0, 0, 0.0)',
                 transform: 'scale(1.0) translateY(-45%)',

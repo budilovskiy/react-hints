@@ -48,6 +48,7 @@ class SimpleSlider extends Component {
 
     componentWillUnmount() {
         document.removeEventListener("keypress", this.onKeyPress, false);
+        clearTimeout(this.timerID);
     }
 
     setHintsVisibility(left, tap, right) {
