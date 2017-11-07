@@ -32,10 +32,12 @@ class SwipeRightHint extends Component {
     }
 
     render() {
+        const { visible, image } = this.props;
+        const { style } = this.state;
         return (
-            <div className='right-hint' style={{ opacity: this.props.visible ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}>
-                <div className='right-hint-image' style={this.state.style}>
-                    <img src={this.props.image} alt="Right"/>
+            <div className='right-hint' style={{ opacity: visible ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}>
+                <div className='right-hint-image' style={style}>
+                    <img src={image} alt="Right"/>
                 </div>
             </div>
         );

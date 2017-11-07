@@ -32,10 +32,12 @@ class TapHint extends Component {
     }
 
     render() {
+        const { visible, image, text } = this.props;
+        const { style } = this.state;
         return (
-            <div className='tap-hint' style={{ opacity: this.props.visible ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}>
-                <div className='tap-hint-image' style={this.state.style}>
-                    {this.props.text ? <div>{this.props.text}</div> : <img src={this.props.image} alt="Tap"/>}
+            <div className='tap-hint' style={{ opacity: visible ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}>
+                <div className='tap-hint-image' style={style}>
+                    {text ? <div>{text}</div> : <img src={image} alt="Tap"/>}
                 </div>
             </div>
         );
