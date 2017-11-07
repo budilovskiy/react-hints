@@ -143,7 +143,7 @@ class SimpleSlider extends Component {
     };
 
     render() {
-        let settings = {
+        const settings = {
             dots: true,
             arrows: false,
             infinite: true,
