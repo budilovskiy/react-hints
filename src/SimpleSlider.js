@@ -39,7 +39,6 @@ class SimpleSlider extends Component {
             zoomImage: false,
             stepBack: false,
         };
-        this.onKeyPress = this.onKeyPress.bind(this);
         this.timerID = undefined;
     }
 
@@ -75,7 +74,7 @@ class SimpleSlider extends Component {
         })
     }
 
-    onKeyPress(event) {
+    onKeyPress = event => {
         console.log('event.keyCode:', event.keyCode);
         switch (event.keyCode) {
             case 122: {
