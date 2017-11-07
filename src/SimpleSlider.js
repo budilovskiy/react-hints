@@ -18,7 +18,7 @@ const themes = {
         right: public_url + '/ic_swipe_right_preview.png'
     }
 };
-const hintsVisibilityTimeout = 10000;
+const hintsVisibilityTimeout = 1000;
 const stepBackText = 'Please, stand back a little';
 
 
@@ -77,9 +77,11 @@ class SimpleSlider extends Component {
     }
 
     onTapPressed() {
-        this.setState({
-            zoomImage: !this.state.zoomImage,
-        })
+        this.setState(prevState => {
+            return {
+                zoomImage: !prevState.zoomImage
+            };
+        });
     }
 
     onKeyPress = event => {
