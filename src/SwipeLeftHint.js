@@ -31,20 +31,18 @@ class SwipeLeftHint extends Component {
         }, 250);
     }
 
-    render() {
-        if (this.props.visible) {
-            return (
-                <div className='left-hint'>
-                    <div className='left-hint-image' style={this.state.style}>
-                        <img src={this.props.image} alt="Left"/>
-                    </div>
+    renderHint() {
+        return (
+            <div className='left-hint'>
+                <div className='left-hint-image' style={this.state.style}>
+                    <img src={this.props.image} alt="Left"/>
                 </div>
-            );
-        } else {
-            return (
-                <div/>
-            )
-        }
+            </div>
+        );
+    }
+
+    render() {
+        return this.props.visible ? this.renderHint() : false;
     }
 }
 
