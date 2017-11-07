@@ -31,18 +31,14 @@ class SwipeRightHint extends Component {
         }, 250);
     }
 
-    renderHint() {
+    render() {
         return (
-            <div className='right-hint'>
+            <div className='right-hint' style={{ opacity: this.props.visible ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}>
                 <div className='right-hint-image' style={this.state.style}>
                     <img src={this.props.image} alt="Right"/>
                 </div>
             </div>
         );
-    }
-
-    render() {
-        return this.props.visible ? this.renderHint() : false;
     }
 }
 
