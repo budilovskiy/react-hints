@@ -8,6 +8,11 @@ class TapHint extends Component {
         this.state = {
             style: {}
         };
+        this.timeout = undefined;
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
     }
 
     onAction() {
@@ -17,7 +22,7 @@ class TapHint extends Component {
             transform: 'scale(1.1) translateY(-40%)',
             transition: 'all 250ms ease'
         }});
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             this.setState({style: {
                 backgroundColor: 'rgba(0, 0, 0, 0.0)',
                 transform: 'scale(1.0) translateY(-45%)',
@@ -27,19 +32,15 @@ class TapHint extends Component {
     }
 
     render() {
-        if (this.props.visible) {
-            return (
-                <div className='tap-hint'>
-                    <div className='tap-hint-image' style={this.state.style}>
-                        {this.props.text ? <div>{this.props.text}</div> : <img src={this.props.image} alt="Tap"/>}
-                    </div>
+        const { visible, image, text } = this.props;
+        const { style } = this.state;
+        return (
+            <div className='tap-hint' style={{ opacity: visible ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}>
+                <div className='tap-hint-image' style={style}>
+                    {text ? <div>{text}</div> : <img src={image} alt="Tap"/>}
                 </div>
-            );
-        } else {
-            return (
-                <div/>
-            )
-        }
+            </div>
+        );
     }
 }
 

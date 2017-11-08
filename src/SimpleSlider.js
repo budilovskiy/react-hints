@@ -5,25 +5,24 @@ import SwipeLeftHint from "./SwipeLeftHint";
 import TapHint from "./TapHint";
 import SwipeRightHint from "./SwipeRightHint";
 
+const public_url = process.env.PUBLIC_URL;
+const themes = {
+    white: {
+        left: public_url + '/ic_swipe_left_preview.png',
+        tap: public_url + '/ic_tap_preview.png',
+        right: public_url + '/ic_swipe_right_preview.png'
+    },
+    green: {
+        left: public_url + '/ic_swipe_left_preview.png',
+        tap: public_url + '/ic_tap_preview.png',
+        right: public_url + '/ic_swipe_right_preview.png'
+    }
+};
+const hintsVisibilityTimeout = 1000;
+const stepBackText = 'Please, stand back a little';
+
+
 class SimpleSlider extends Component {
-
-    public_url = process.env.PUBLIC_URL;
-    themes = {
-        white: {
-            left: this.public_url + '/ic_swipe_left_preview.png',
-            tap: this.public_url + '/ic_tap_preview.png',
-            right: this.public_url + '/ic_swipe_right_preview.png'
-        },
-        green: {
-            left: this.public_url + '/ic_swipe_left_preview.png',
-            tap: this.public_url + '/ic_tap_preview.png',
-            right: this.public_url + '/ic_swipe_right_preview.png'
-        }
-    };
-    hintsVisibilityTimeout = 10000;
-    timerID;
-    stepBackText = 'Please, stand back a little';
-
     constructor(props) {
         super(props);
         this.state = {
@@ -33,14 +32,23 @@ class SimpleSlider extends Component {
                 right: false
             },
             hintsImages: {
-                left: this.themes.white.left,
-                tap: this.themes.white.tap,
-                right: this.themes.white.right
+                left: themes.white.left,
+                tap: themes.white.tap,
+                right: themes.white.right
             },
             zoomImage: false,
             stepBack: false,
         };
-        this.onKeyPress = this.onKeyPress.bind(this);
+        this.timerID = undefined;
+    }
+    
+    componentDidMount() {
+        document.addEventListener("keypress", this.onKeyPress, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keypress", this.onKeyPress, false);
+        clearTimeout(this.timerID);
     }
 
     setHintsVisibility(left, tap, right) {
@@ -55,27 +63,27 @@ class SimpleSlider extends Component {
             },
             stepBack: false
         });
-        this.timerID = setTimeout(
-            () => {
-                this.setState({
-                    hintsVisibility: {
-                        left: false,
-                        tap: false,
-                        right: false
-                    },
-                    zoomImage: false
-                });
-            }, this.hintsVisibilityTimeout
-        );
+        this.timerID = setTimeout(() => {
+            this.setState({
+                hintsVisibility: {
+                    left: false,
+                    tap: false,
+                    right: false
+                },
+                zoomImage: false
+            }); 
+        }, hintsVisibilityTimeout);
     }
 
     onTapPressed() {
-        this.setState({
-            zoomImage: !this.state.zoomImage,
-        })
+        this.setState(prevState => {
+            return {
+                zoomImage: !prevState.zoomImage
+            };
+        });
     }
 
-    onKeyPress(event) {
+    onKeyPress = event => {
         console.log('event.keyCode:', event.keyCode);
         switch (event.keyCode) {
             case 122: {
@@ -134,16 +142,8 @@ class SimpleSlider extends Component {
         }
     };
 
-    componentDidMount() {
-        document.addEventListener("keypress", this.onKeyPress, false);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener("keypress", this.onKeyPress, false);
-    }
-
     render() {
-        let settings = {
+        const settings = {
             dots: true,
             arrows: false,
             infinite: true,
@@ -162,7 +162,7 @@ class SimpleSlider extends Component {
                     ref={instance => this.tapHint = instance}
                     visible={this.state.hintsVisibility.tap}
                     image={this.state.hintsImages.tap}
-                    text={this.state.stepBack ? this.stepBackText : ''}
+                    text={this.state.stepBack ? stepBackText : ''}
                 />
                 <SwipeRightHint
                     ref={instance => this.rightHint = instance}
@@ -170,10 +170,10 @@ class SimpleSlider extends Component {
                     image={this.state.hintsImages.right}
                 />
                 <Slider ref={instance => this.slider = instance} {...settings}>
-                    <img src={this.public_url + '/1.jpeg'} style={this.getZoom()} alt="1"/>
-                    <img src={this.public_url + '/2.jpeg'} style={this.getZoom()} alt="2"/>
-                    <img src={this.public_url + '/3.jpeg'} style={this.getZoom()} alt="3"/>
-                    <img src={this.public_url + '/4.jpeg'} style={this.getZoom()} alt="4"/>
+                    <img src={public_url + '/1.jpeg'} style={this.getZoom()} alt="1"/>
+                    <img src={public_url + '/2.jpeg'} style={this.getZoom()} alt="2"/>
+                    <img src={public_url + '/3.jpeg'} style={this.getZoom()} alt="3"/>
+                    <img src={public_url + '/4.jpeg'} style={this.getZoom()} alt="4"/>
                 </Slider>
             </div>
         )

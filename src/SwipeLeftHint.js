@@ -8,6 +8,11 @@ class SwipeLeftHint extends Component {
         this.state = {
             style: {}
         };
+        this.timeout = undefined;
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
     }
 
     onAction() {
@@ -17,7 +22,7 @@ class SwipeLeftHint extends Component {
             transform: 'scale(1.1) translateY(-40%)',
             transition: 'all 250ms ease'
         }});
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             this.setState({style: {
                 backgroundColor: 'rgba(0, 0, 0, 0.0)',
                 transform: 'scale(1.0) translateY(-45%)',
@@ -27,19 +32,15 @@ class SwipeLeftHint extends Component {
     }
 
     render() {
-        if (this.props.visible) {
-            return (
-                <div className='left-hint'>
-                    <div className='left-hint-image' style={this.state.style}>
-                        <img src={this.props.image} alt="Left"/>
-                    </div>
+        const { visible, image } = this.props;
+        const { style } = this.state;
+        return (
+            <div className='left-hint' style={{ opacity: visible ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}>
+                <div className='left-hint-image' style={style}>
+                    <img src={image} alt="Left"/>
                 </div>
-            );
-        } else {
-            return (
-                <div/>
-            )
-        }
+            </div>
+        );
     }
 }
 
